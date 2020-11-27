@@ -1,14 +1,8 @@
-clc;
-clear all;
-close all;
-tic;
-
-% parametros de entrada L, K
-L = 9; % tamanho do bloco. 9 = 3 x 3
+function quantizacao_c_kmeans(Img, L)
 K = 256; % tamanho do dicionário
 
 % Leitura da imagem de entrada
-Img = imread('cameraman.tif');
+
 Img2D_rows = size(Img, 1);
 Img2D_cols = size(Img, 2);
 figure, imshow(Img), title('Imagem de Entrada');
@@ -53,25 +47,21 @@ figure, imshow(l_re);
 title('imagem comprimida por quantizacao vetorial (kmeans)');
 
 % mostra a area de memoria ocupada pelas imagens de entrada e saida
-fprintf('tamanho da memoria da imagem de entrada = %d bytes', numel(Img));
-disp('');
-fprintf('tamanho da memoria da imagem de saida = %d bytes', K * L +...
+fprintf('tamanho da memoria da imagem de entrada = %d bytes\n', numel(Img));
+fprintf('tamanho da memoria da imagem de saida = %d bytes\n', K * L +...
     numel(Img1) / L);
-disp('');
 
 % mostra a taxa de compressão: bits entrada x bits saida
-fprintf('taxa de compressão (bits de entrada x bits de saida): %.2fx %d',...
+fprintf('taxa de compressão (bits de entrada x bits de saida): %.2f x %d\n',...
     double(numel(Img)) / double(K * L + numel(Img1) / L), 1);
-disp('');
 
 % mostra o SNR e o PSNR
 SNR = 10 * log10(std2(double(Img))^2 / std2(double(Img) - double(l_re))^2);
 I_max = max(max(double(Img)));
 I_min = min(min(double(Img)));
-A = (l_max - l_min);
+A = (I_max - I_min);
 PSNR = 10 * log10((A^2) / (std2(double(Img) - double(l_re))^2));
-fprintf('SNR = %.2f (dB)', SNR);
-disp('');
-fprintf('PSNR = %.2f (dB)', PSNR);
-disp('');
+fprintf('SNR = %.2f (dB)\n', SNR);
+fprintf('PSNR = %.2f (dB)\n', PSNR);
 toc;
+end

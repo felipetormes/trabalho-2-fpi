@@ -20,14 +20,11 @@ while(iter <= 2 || (Distortion(1) - Distortion(2)) / Distortion(2) > 0.9)
 	Distortion(1) = Distortion(2); 
 	Distortion(2) = 0;
 	for i = 1:length(s)
-		% VEC DISTé um array de celulas e cada celula é um vetor % cada celula é um array de distancias dos vetores de entrada
-		% aos K vetores do dicionario
 		vec_dist{i} = dist(s{i}, reshape(cell2mat(codebook), L, length(codebook))); 
 		ClusterNum(i) = find(vec_dist{i} == min(vec_dist{i}), 1);
 		Distortion(2) = Distortion(2) + min(vec_dist{i});
 	end
 	Distortion(2) = Distortion(2) / length(s);
-	% atualiza o dicionario substituindo cada vetor pela media do % conjunto de vetores de entrada correspondente
 end
 for i = 1:K
     temp = reshape(cell2mat(s), L, length(s));
