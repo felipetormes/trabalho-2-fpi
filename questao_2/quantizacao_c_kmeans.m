@@ -1,4 +1,5 @@
 function quantizacao_c_kmeans(Img, L)
+tic;
 K = 256; % tamanho do dicionário
 
 % Leitura da imagem de entrada
@@ -17,7 +18,7 @@ Img1(1:Img2D_rows, 1:Img2D_cols) = Img;
 if r1 ~= 0
     Pad_rows = Img(end, :);
     for j = 1:r1
-        Pad_rows(j, :) = Pad_rows(1, :); % 1 linha a mais
+        Pad_rows(j, :) = Pad_rows(1, :);
     end
     Img1(1:Img2D_rows, 1:Img2D_cols) = Img;
     Img1(Img2D_rows + 1:end, 1:Img2D_cols) = Pad_rows;
@@ -25,13 +26,13 @@ end
 if r1 ~= 0 && r2 ~= 0
     Pad_cols = Img1(:, Img2D_cols);
     for j = 1:r2
-        Pad_cols(:, j) = Pad_cols(:, 1); % 1 coluna a mais (1 linha ja foi adicionada)
+        Pad_cols(:, j) = Pad_cols(:, 1);
     end
     Img1(1:end, Img2D_cols + 1:end) = Pad_cols;
 elseif r2 ~= 0
     Pad_cols = Img(:, Img2D_cols);
     for j = 1:sqrt(L) - r2
-        Pad_cols(:, j) = Pad_cols(:, 1); % 1 coluna a mais
+        Pad_cols(:, j) = Pad_cols(:, 1);
     end
     Img1(1:Img2D_rows, 1:Img2D_cols) = Img;
     Img1(1:Img2D_rows, Img2D_cols + 1:end) = Pad_cols;
